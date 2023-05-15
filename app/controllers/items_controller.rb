@@ -3,8 +3,8 @@ class ItemsController < ApplicationController
   before_action :find_merchant, only: [:new, :create, :index]
 
   def index
-    @enabled_items = @merchant.items.where(status: 1)
-    @disabled_items = @merchant.items.where(status: 0)
+    @enabled_items = @merchant.enabled_items
+    @disabled_items = @merchant.disabled_items
   end
 
   def show
@@ -33,7 +33,7 @@ class ItemsController < ApplicationController
     Item.create!(name: params[:name],
                 description: params[:description],
                 unit_price: params[:unit_price],
-                id: find_new_id, merchant: @merchant)
+                merchant: @merchant)
     redirect_to merchant_items_path(@merchant)
   end
 
@@ -51,7 +51,4 @@ class ItemsController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
   end
 
-  def find_new_id
-    Item.last.id + 1
-  end
 end

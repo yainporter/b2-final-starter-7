@@ -158,5 +158,15 @@ describe Merchant do
     it "best_day" do
       expect(@merchant1.best_day).to eq(@invoice_8.created_at.to_date)
     end
+
+    it "enabled_items" do
+      expect(@merchant1.enabled_items).to eq([@item_1])
+      expect(@merchant2.enabled_items).to eq([])
+    end
+
+    it "disabled_items" do 
+      expect(@merchant1.disabled_items).to eq([@item_2, @item_3, @item_4, @item_7, @item_8])
+      expect(@merchant2.disabled_items).to eq([@item_5, @item_6])
+    end
   end
 end

@@ -1,13 +1,4 @@
-<div class="nav-container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <p class="navbar-text"><%= @merchant.name %></p>
-    <ul class="nav navbar-nav">
-      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
-      <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
-      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
-    </ul>
-  </nav>
-</div>
+<%= render partial: "shared/nav" %>
 
 <body>
   <div class="row">
@@ -45,10 +36,12 @@
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
-            <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
-                                            <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
-                                            <%= f.submit 'Update Invoice' %>
-                                          <% end %></td><br/>
+            <td style="text-align:center">
+              <%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
+                <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
+                <%= f.submit 'Update Invoice' %>
+              <% end %>
+              </td>
           </tr>
         </section>
       <% end %>

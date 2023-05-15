@@ -1,13 +1,4 @@
-<div class="nav-container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <p class="navbar-text"><%= @merchant.name %></p>
-    <ul class="nav navbar-nav">
-      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
-      <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
-      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
-    </ul>
-  </nav>
-</div>
+<%= render partial: "shared/nav" %>
 
 <body>
   <div class="row">
@@ -17,7 +8,7 @@
 
   <p><%= @item.description %></p><br/>
 
-  <p>Price: $<%= @item.unit_price %></p>
+  <p>Price: <%= number_to_currency(@item.unit_price) %></p>
 
   <strong><%= link_to "Update Item", edit_merchant_item_path(@merchant, @item) %></strong>
 
