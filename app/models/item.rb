@@ -12,11 +12,14 @@ class Item < ApplicationRecord
 
   def best_day
     invoices
-    .joins(:invoice_items)
-    .where('invoices.status = 2')
-    .select('invoices.*, sum(invoice_items.unit_price * invoice_items.quantity) as money')
-    .group(:id)
-    .order("money desc", "created_at desc")
-    .first&.created_at&.to_date
+    .joins(:transactions)
+    .where("transactions.result = 1")
+    .where("invoices.status = 2")
+    .select("CAST(invoices.created_at as date) as invoice_date, sum(invoice_items.unit_price * invoice_items.quantity) as total_rev")
+    .group("invoice_date")
+    .order("total_rev desc")
+    .limit(1)
+    .first&.invoice_date&.to_date
+
   end
 end
