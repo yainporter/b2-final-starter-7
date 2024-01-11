@@ -12,18 +12,18 @@ describe "Admin Merchant Index" do
     @c1 = Customer.create!(first_name: "Yo", last_name: "Yoz")
     @c2 = Customer.create!(first_name: "Hey", last_name: "Heyz")
 
-    @i1 = Invoice.create!(customer_id: @c1.id, status: 2)
-    @i2 = Invoice.create!(customer_id: @c1.id, status: 2)
-    @i3 = Invoice.create!(customer_id: @c2.id, status: 2)
-    @i4 = Invoice.create!(customer_id: @c2.id, status: 2)
-    @i5 = Invoice.create!(customer_id: @c2.id, status: 2)
-    @i6 = Invoice.create!(customer_id: @c2.id, status: 2)
-    @i7 = Invoice.create!(customer_id: @c1.id, status: 2)
-    @i8 = Invoice.create!(customer_id: @c1.id, status: 2)
-    @i9 = Invoice.create!(customer_id: @c1.id, status: 2)
-    @i10 = Invoice.create!(customer_id: @c2.id, status: 2)
-    @i11 = Invoice.create!(customer_id: @c2.id, status: 2)
-    @i12 = Invoice.create!(customer_id: @c2.id, status: 2)
+    @i1 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i2 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i3 = Invoice.create!(customer_id: @c2.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i4 = Invoice.create!(customer_id: @c2.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i5 = Invoice.create!(customer_id: @c2.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i6 = Invoice.create!(customer_id: @c2.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i7 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i8 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i9 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i10 = Invoice.create!(customer_id: @c2.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i11 = Invoice.create!(customer_id: @c2.id, status: 2, created_at: "2012-03-27 14:54:09")
+    @i12 = Invoice.create!(customer_id: @c2.id, status: 2, created_at: "2012-03-27 14:54:09")
 
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @m1.id)
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @m2.id)
@@ -95,7 +95,7 @@ describe "Admin Merchant Index" do
 
   it "should display the best day for each top 5 merchant" do
     within("#top-#{@m1.id}") do
-      expect(page).to have_content("Top Selling Date for #{@m1.name} was on #{@m1.best_day.strftime("%_m/%d/%Y")}")
+      expect(page).to have_content("Top Selling Date for #{@m1.name} was on 3/27/2012")
     end
   end
 end
