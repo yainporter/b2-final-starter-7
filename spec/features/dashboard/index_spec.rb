@@ -123,8 +123,9 @@ RSpec.describe "merchant dashboard" do
   describe "User Story 1 - Merchant Coupons Index" do
     it "has a link to view all of a Merchant's coupons" do
 
-      expect(page).to have_link("All Coupons", :href=>"merchant_coupons_path")
-      expect(page.current_path).to eq("/merchants/#{@merchant1.id}/coupons")
+      expect(page).to have_link("All Coupons")
+      click_link("All Coupons")
+      expect(page.current_path).to eq(merchant_coupons_path(@merchant1.id))
     end
   end
 end

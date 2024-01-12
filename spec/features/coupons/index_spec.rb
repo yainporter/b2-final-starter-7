@@ -40,11 +40,11 @@ RSpec.describe "merchant dashboard" do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    @coupon_1 = Coupon.create!(coupon: "10% Off!", amount_off: 10, merchant_id: @merchant_1.id)
-    @coupon_2 = Coupon.create!(coupon: "BOGO", amount_off: 50, merchant_id: @merchant_1.id)
-    @coupon_3 = Coupon.create!(coupon: "Welcome", amount_off: 20, merchant_id: @merchant_1.id)
+    @coupon_1 = Coupon.create!(coupon: "10% Off!", amount_off: 10, merchant_id: @merchant1.id)
+    @coupon_2 = Coupon.create!(coupon: "BOGO", amount_off: 50, merchant_id: @merchant1.id)
+    @coupon_3 = Coupon.create!(coupon: "Welcome", amount_off: 20, merchant_id: @merchant1.id)
 
-    visit merchant_coupons_path(@merchant_1)
+    visit merchant_coupons_path(@merchant1.id)
   end
 
   describe "User Story 1 - Merchant Coupons Index" do
@@ -52,12 +52,16 @@ RSpec.describe "merchant dashboard" do
       expect(page).to have_content("Welcome - 20%")
       expect(page).to have_content("BOGO - 50%")
       expect(page).to have_content("10% Off! - 10%")
+      save_and_open_page
     end
 
     it "has a link to each coupon's show page as it's name" do
-      expect(page).to have_link("Welcome", :href=>"merchant_coupon(#{@coupon_3}")
-      expect(page).to have_link("BOGO", :href=>"merchant_coupon(#{@coupon_2}")
-      expect(page).to have_link("10% Off!", :href=>"merchant_coupon(#{@coupon_1}")
+      expect(page).to have_link("Welcome")
+      expect(page).to have_link("BOGO")
+      expect(page).to have_link("10% Off!")
+
+      click_link("Welcome")
+      expect(page.current_path).to eq(merchant_coupon_path(@merchant1.id,@coupon_3.id))
     end
   end
 end
