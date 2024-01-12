@@ -40,9 +40,9 @@ RSpec.describe "merchant dashboard" do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    @coupon_1 = Coupon.create!(coupon: "10% Off!", amount_off: 10)
-    @coupon_2 = Coupon.create!(coupon: "BOGO", amount_off: 50)
-    @coupon_3 = Coupon.create!(coupon: "Welcome", amount_off: 20)
+    @coupon_1 = Coupon.create!(coupon: "10% Off!", amount_off: 10, merchant_id: @merchant_1.id)
+    @coupon_2 = Coupon.create!(coupon: "BOGO", amount_off: 50, merchant_id: @merchant_1.id)
+    @coupon_3 = Coupon.create!(coupon: "Welcome", amount_off: 20, merchant_id: @merchant_1.id)
 
     visit merchant_coupons_path(@merchant_1)
   end
