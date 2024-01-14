@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "coupon index" do
+RSpec.describe "new coupon" do
   before :each do
     @merchant1 = Merchant.create!(name: "Hair Care")
 
@@ -44,31 +44,30 @@ RSpec.describe "coupon index" do
     @coupon_2 = Coupon.create!(coupon: "BOGO", amount_off: 50, merchant_id: @merchant1.id)
     @coupon_3 = Coupon.create!(coupon: "Welcome", amount_off: 20, merchant_id: @merchant1.id)
 
-    visit merchant_coupons_path(@merchant1.id)
-  end
-
-  describe "User Story 1 - Merchant Coupons Index" do
-    it "has a list of all my coupon names including their amount off" do
-      expect(page).to have_content("Welcome - 20%")
-      expect(page).to have_content("BOGO - 50%")
-      expect(page).to have_content("10% Off! - 10%")
-      save_and_open_page
-    end
-
-    it "has a link to each coupon's show page as it's name" do
-      expect(page).to have_link("Welcome")
-      expect(page).to have_link("BOGO")
-      expect(page).to have_link("10% Off!")
-
-      click_link("Welcome")
-      expect(page.current_path).to eq(merchant_coupon_path(@merchant1.id,@coupon_3.id))
-    end
+    visit new_merchant_coupon_path(@merchant1.id)
   end
 
   describe "User Story 2 - Merchant Coupon Create" do
-    it "has a link to create a new coupon" do
-      expect(page).to have_link("Create New Coupon")
-      expect(page.current_path).to eq(new_merchant_coupon_path(@merchant1.id))
+    it "has a form to add a new coupon" do
+      visit merchant_coupons_path(@merchant1.id)
+      expect(page).to have_no_content("VIP Customers")
+
+      visit new_merchant_coupon_path(@merchant1.id)
+      expect(page).to have_content("Create New Coupon")
+      expect(page).to have_content("Coupon Name:")
+      expect(page).to have_content("Unique Code:")
+      expect(page).to have_content("Amount:")
+      expect(page).to have_content("Dollar")
+      expect(page).to have_content("Percent")
+
+      fill_in("Coupon Name:", with: "VIP Customers")
+      fill_in("Unique Code:", with: "VIP30")
+      fill_in("Amount:", with: 30)
+      click_on ("Percent")
+      click_on ("Create")
+
+      visit merchant_coupons_path(@merchant1.id)
+      expect(page).to have_content("VIP Customers")
     end
   end
 end
