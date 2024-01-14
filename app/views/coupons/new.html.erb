@@ -1,0 +1,16 @@
+<h1>Create New Coupon</h1>
+<%= form_with model: [:merchant, Coupon.new], method: :post do |f| %>
+  <%= f.hidden_field :merchant_id, value: params[:merchant_id] %>
+  <%= f.label :coupon, 'Coupon Name:' %>
+  <%= f.text_area :coupon %>
+  <%= f.label :unique_code, 'Unique Code:' %>
+  <%= f.text_area :unique_code %>
+  <%= f.label :amount_off, 'Amount:' %>
+  <%= f.text_area :amount_off %>
+  <p>Dollar amount or percentage?</p>
+  <%= f.label :percent, "Dollar", id: "dollar" %>
+  <%= f.radio_button :percent, value: false %>
+  <%= f.label :percent, "Percent" %>
+  <%= f.radio_button :percent, value: true, checked: true %>
+  <%= f.submit "Create"%>
+<% end %>

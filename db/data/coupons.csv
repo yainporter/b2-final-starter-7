@@ -1,4 +1,4 @@
-id,coupon,amount_off
-1,10% Off!,10
-2,BOGO,50
-3,Welcome,20
+id,coupon,amount_off,percent,unique_code
+1,10% Off!,10,true,10off
+2,BOGO,50,false,bogo50
+3,Welcome,20,true,welcome20

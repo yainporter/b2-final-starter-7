@@ -52,7 +52,6 @@ RSpec.describe "coupon index" do
       expect(page).to have_content("Welcome - 20%")
       expect(page).to have_content("BOGO - 50%")
       expect(page).to have_content("10% Off! - 10%")
-      save_and_open_page
     end
 
     it "has a link to each coupon's show page as it's name" do
@@ -68,6 +67,7 @@ RSpec.describe "coupon index" do
   describe "User Story 2 - Merchant Coupon Create" do
     it "has a link to create a new coupon" do
       expect(page).to have_link("Create New Coupon")
+      click_link("Create New Coupon")
       expect(page.current_path).to eq(new_merchant_coupon_path(@merchant1.id))
     end
   end

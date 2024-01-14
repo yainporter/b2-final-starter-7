@@ -63,11 +63,11 @@ RSpec.describe "new coupon" do
       fill_in("Coupon Name:", with: "VIP Customers")
       fill_in("Unique Code:", with: "VIP30")
       fill_in("Amount:", with: 30)
-      click_on ("Percent")
-      click_on ("Create")
+      click_button ("Create")
 
       visit merchant_coupons_path(@merchant1.id)
       expect(page).to have_content("VIP Customers")
+      save_and_open_page
     end
   end
 end
