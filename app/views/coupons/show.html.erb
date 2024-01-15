@@ -1,0 +1,13 @@
+<h1><%= @coupon.coupon %> Coupon Details</h1>
+<section>
+  <p>Code: <%= @coupon.unique_code.upcase %></p>
+  <p>Value: <%= @coupon.amount_off %> 
+    <% if @coupon.percent? %>
+      percent off
+    <% else %>
+      dollars off
+    <% end %>
+  </p>
+  <p>Status: <%= @coupon.status %></p>
+  <p>Successful Transactions: <%= @coupon.successful_transactions%></p>
+</section>

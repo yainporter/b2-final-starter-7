@@ -81,7 +81,7 @@ describe Merchant do
 
     end
 
-    xit 'top_merchants' do
+    it 'top_merchants' do
       actual = Merchant.top_merchants.map do |result|
         result.name
       end
@@ -164,7 +164,7 @@ describe Merchant do
       expect(@merchant2.enabled_items).to eq([])
     end
 
-    it "disabled_items" do 
+    it "disabled_items" do
       expect(@merchant1.disabled_items).to eq([@item_2, @item_3, @item_4, @item_7, @item_8])
       expect(@merchant2.disabled_items).to eq([@item_5, @item_6])
     end
