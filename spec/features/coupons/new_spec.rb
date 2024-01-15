@@ -78,7 +78,6 @@ RSpec.describe "new coupon" do
       fill_in("Coupon Name:", with: "VIP Customers")
       fill_in("Amount:", with: 30)
       click_button ("Create")
-
       expect(page).to have_content("Coupon not created: Unique code can't be blank")
 
       fill_in("Coupon Name:", with: "VIP Customers")
@@ -115,5 +114,5 @@ RSpec.describe "new coupon" do
       expect(page).to have_content("Coupon not created, you already have 5 or more coupons!")
     end
   end
-  
+
 end

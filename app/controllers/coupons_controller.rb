@@ -1,4 +1,6 @@
 class CouponsController < ApplicationController
+  before_action :find_merchant, only: [:index, :show, :new, :create, :update]
+
   def index
     @coupons = Coupon.all
   end
@@ -16,6 +18,15 @@ class CouponsController < ApplicationController
     create_sad_paths(coupon)
   end
 
+  def update
+    @coupon = Coupon.find(params[:id])
+    if coupon_params.empty?
+      @coupon.update(status: params[:coupon][:status])
+
+      render :show
+    end
+  end
+
   private
 
   def coupon_params
@@ -31,5 +42,9 @@ class CouponsController < ApplicationController
       flash[:alert] = "Coupon not created: #{coupon.errors.full_messages.join(", ")}"
       render :new
     end
+  end
+
+  def find_merchant
+    @merchant = Merchant.find(params[:merchant_id])
   end
 end
