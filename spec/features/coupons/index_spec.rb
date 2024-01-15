@@ -40,9 +40,9 @@ RSpec.describe "coupon index" do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    @coupon_1 = Coupon.create!(coupon: "10% Off!", amount_off: 10, merchant_id: @merchant1.id)
-    @coupon_2 = Coupon.create!(coupon: "BOGO", amount_off: 50, merchant_id: @merchant1.id)
-    @coupon_3 = Coupon.create!(coupon: "Welcome", amount_off: 20, merchant_id: @merchant1.id)
+    @coupon_1 = Coupon.create!(coupon: "10% Off!", amount_off: 10, merchant_id: @merchant1.id, unique_code: "10off", percent: true)
+    @coupon_2 = Coupon.create!(coupon: "BOGO", amount_off: 50, merchant_id: @merchant1.id, unique_code: "BOGO", percent: false)
+    @coupon_3 = Coupon.create!(coupon: "Welcome", amount_off: 20, merchant_id: @merchant1.id, unique_code: "welcome20", percent: true)
 
     visit merchant_coupons_path(@merchant1.id)
   end

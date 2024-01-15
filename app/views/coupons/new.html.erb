@@ -2,15 +2,15 @@
 <%= form_with model: [:merchant, Coupon.new], method: :post do |f| %>
   <%= f.hidden_field :merchant_id, value: params[:merchant_id] %>
   <%= f.label :coupon, 'Coupon Name:' %>
-  <%= f.text_area :coupon %>
+  <%= f.text_area :coupon %><br>
   <%= f.label :unique_code, 'Unique Code:' %>
-  <%= f.text_area :unique_code %>
+  <%= f.text_area :unique_code %><br>
   <%= f.label :amount_off, 'Amount:' %>
-  <%= f.text_area :amount_off %>
+  <%= f.text_area :amount_off %><br>
   <p>Dollar amount or percentage?</p>
+  <%= f.radio_button :percent, false %>
   <%= f.label :percent, "Dollar", id: "dollar" %>
-  <%= f.radio_button :percent, value: false %>
-  <%= f.label :percent, "Percent" %>
-  <%= f.radio_button :percent, value: true, checked: true %>
+  <%= f.radio_button :percent, true, checked: true %>
+  <%= f.label :percent, "Percent" %><br>
   <%= f.submit "Create"%>
 <% end %>

@@ -12,7 +12,13 @@ class CouponsController < ApplicationController
   end
 
   def create
-    @coupon = Coupon.create!(coupon_params)
+    coupon = Coupon.new(coupon_params)
+    if coupon.save
+      redirect_to merchant_coupons_path(params[:merchant_id])
+    else
+      flash[:alert] = "Coupon not created: #{coupon.errors.full_messages.join(", ")}"
+      render :new
+    end
   end
 
   private
