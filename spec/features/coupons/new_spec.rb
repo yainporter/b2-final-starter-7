@@ -71,8 +71,10 @@ RSpec.describe "new coupon" do
       expect(page).to have_content("New coupon created!")
 
     end
+  end
 
-    it "has a sad path when fields are left empty" do
+  describe "User Story 2 - Sad Paths" do
+    it "has an alert message when fields are empty" do
       fill_in("Coupon Name:", with: "VIP Customers")
       fill_in("Amount:", with: 30)
       click_button ("Create")
@@ -92,7 +94,16 @@ RSpec.describe "new coupon" do
       expect(page).to have_content("Coupon not created: Coupon can't be blank")
     end
 
-    it "has a sad path when there are already 5 or more coupons" do
+    it "has an alert message when a unique code is taken" do
+      fill_in("Coupon Name:", with: "Welcome 20!")
+      fill_in("Amount:", with: 20)
+      fill_in("Unique Code:", with: "welcome20")
+      click_button ("Create")
+
+      expect(page).to have_content("Coupon not created: Unique code has already been taken")
+    end
+
+    it "has an alert message when there are already 5 or more coupons" do
       coupon_4 = Coupon.create!(coupon: "Hello", amount_off: 5, merchant_id: @merchant1.id, unique_code: "hello5", percent: true)
       coupon_5 = Coupon.create!(coupon: "Subscribe", amount_off: 20, merchant_id: @merchant1.id, unique_code: "subscribe20", percent: true)
 
@@ -104,4 +115,5 @@ RSpec.describe "new coupon" do
       expect(page).to have_content("Coupon not created, you already have 5 or more coupons!")
     end
   end
+  
 end
