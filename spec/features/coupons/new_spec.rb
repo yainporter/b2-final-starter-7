@@ -68,6 +68,8 @@ RSpec.describe "new coupon" do
 
       expect(page.current_path).to eq(merchant_coupons_path(@merchant1.id))
       expect(page).to have_content("VIP Customers")
+      expect(page).to have_content("New coupon created!")
+
     end
 
     it "has a sad path when fields are left empty" do
@@ -88,7 +90,18 @@ RSpec.describe "new coupon" do
       click_button ("Create")
 
       expect(page).to have_content("Coupon not created: Coupon can't be blank")
+    end
 
+    it "has a sad path when there are already 5 or more coupons" do
+      coupon_4 = Coupon.create!(coupon: "Hello", amount_off: 5, merchant_id: @merchant1.id, unique_code: "hello5", percent: true)
+      coupon_5 = Coupon.create!(coupon: "Subscribe", amount_off: 20, merchant_id: @merchant1.id, unique_code: "subscribe20", percent: true)
+
+      fill_in("Coupon Name:", with: "VIP Customers")
+      fill_in("Unique Code:", with: "VIP30")
+      fill_in("Amount:", with: 30)
+      click_button ("Create")
+
+      expect(page).to have_content("Coupon not created, you already have 5 or more coupons!")
     end
   end
 end

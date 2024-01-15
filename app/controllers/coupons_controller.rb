@@ -13,17 +13,29 @@ class CouponsController < ApplicationController
 
   def create
     coupon = Coupon.new(coupon_params)
-    if coupon.save
-      redirect_to merchant_coupons_path(params[:merchant_id])
-    else
-      flash[:alert] = "Coupon not created: #{coupon.errors.full_messages.join(", ")}"
-      render :new
-    end
+    create_sad_paths(coupon)
+    # if coupon.save
+    #   redirect_to merchant_coupons_path(params[:merchant_id]), notice: "New coupon created!"
+    # else
+    #   flash[:alert] = "Coupon not created: #{coupon.errors.full_messages.join(", ")}"
+    #   render :new
+    # end
   end
 
   private
 
   def coupon_params
     params.require(:coupon).permit(:coupon, :amount_off, :percent, :unique_code, :merchant_id)
+  end
+
+  def create_sad_paths(coupon)
+    if Coupon.count >= 5
+      redirect_to merchant_coupons_path(params[:merchant_id]), notice: "Coupon not created, you already have 5 or more coupons!"
+    elsif coupon.save
+      redirect_to merchant_coupons_path(params[:merchant_id]), notice: "New coupon created!"
+    else
+      flash[:alert] = "Coupon not created: #{coupon.errors.full_messages.join(", ")}"
+      render :new
+    end
   end
 end
