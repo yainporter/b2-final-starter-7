@@ -22,7 +22,7 @@ class CouponsController < ApplicationController
     @coupon = Coupon.find(params[:id])
     if coupon_params.empty?
       @coupon.update(status: params[:coupon][:status])
-
+      flash[:notice] = "#{@coupon.coupon} has been deactivated!"
       render :show
     end
   end

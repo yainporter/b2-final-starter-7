@@ -115,12 +115,21 @@ RSpec.describe "coupon show" do
       coupon2 = Coupon.create!(coupon: "Buy one, get one 50% off", amount_off: 50, merchant_id: @merchant1.id, unique_code: "BOGO506", percent: true, status: 0)
 
       visit merchant_coupon_path(@merchant1.id, coupon2.id)
-      
+
       expect(page).to have_content("Status: active")
       expect(page).to have_button("deactivate")
 
       click_button("deactivate")
       expect(page).to have_content("Status: inactive")
+    end
+
+    it "has a flash message to confirm that the coupon has been deactivated" do
+      coupon2 = Coupon.create!(coupon: "Buy one, get one 50% off", amount_off: 50, merchant_id: @merchant1.id, unique_code: "BOGO506", percent: true, status: 0)
+
+      visit merchant_coupon_path(@merchant1.id, coupon2.id)
+      click_button("deactivate")
+
+      expect(page).to have_content("#{coupon2.coupon} has been deactivated!")
     end
   end
 end
