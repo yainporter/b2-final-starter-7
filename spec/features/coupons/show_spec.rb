@@ -154,9 +154,7 @@ RSpec.describe "coupon show" do
       expect(page).to have_content("Coupon '10% Off!' is now active")
 
       visit merchant_coupon_path(@merchant1.id, @coupon3.id)
-      save_and_open_page
       click_button("activate")
-      save_and_open_page
 
       expect(page).to have_content("Status: active")
       expect(page).to have_content("Coupon 'Welcome' is now active")

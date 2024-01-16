@@ -12,6 +12,7 @@ RSpec.describe "coupon index" do
     @coupon1 = Coupon.create!(coupon: "10% Off!", amount_off: 10, merchant_id: @merchant1.id, unique_code: "10off", percent: true)
     @coupon2 = Coupon.create!(coupon: "Buy one, get one 50% off", amount_off: 50, merchant_id: @merchant1.id, unique_code: "BOGO50", percent: true, status: 0)
     @coupon3 = Coupon.create!(coupon: "Welcome", amount_off: 20, merchant_id: @merchant1.id, unique_code: "welcome20", percent: true)
+    @coupon4 = Coupon.create!(coupon: "New User", amount_off: 20, merchant_id: @merchant1.id, unique_code: "welcome204", percent: true, status: 0)
 
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
@@ -99,8 +100,17 @@ RSpec.describe "coupon index" do
 
   describe "User Story 6 - Merchant Coupon Index Sorted" do
     it "separates active and inactive coupons" do
-      coupon1 = Coupon.create!(coupon: "New User", amount_off: 20, merchant_id: @merchant1.id, unique_code: "welcome20", percent: true, status: 0)
-      with
+
+      save_and_open_page
+      within "#active-coupons" do
+        expect(page).to have_content("New User")
+        expect(page).to have_content("Buy one, get one 50% off")
+      end
+
+      within "#inactive-coupons" do
+        expect(page).to have_content("Welcome - 20%")
+        expect(page).to have_content("10% Off! - 10%")
+      end
     end
   end
 end

@@ -1,10 +1,29 @@
 <%= render partial: "shared/nav" %>
 <h1>All Coupons</h1>
+
+<section>
+  <ul>
+    <li>Active Coupons</li>
+      <ul id="active-coupons">
+        <% @coupons.each do |coupon| %>
+          <% if coupon.active? %>
+            <li>
+              <%= link_to "#{coupon.coupon}", merchant_coupon_path(params[:merchant_id], coupon.id) %> - <%= number_to_percentage(coupon.amount_off, precision: 0) %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    <li>Inactive Coupons</li>
+      <ul id="inactive-coupons">
+        <% @coupons.each do |coupon| %>
+          <% if !coupon.active? %>
+            <li>
+              <%= link_to "#{coupon.coupon}", merchant_coupon_path(params[:merchant_id], coupon.id) %> - <%= number_to_percentage(coupon.amount_off, precision: 0) %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+  </ul>
+</section>
+
 <h2><%= link_to 'Create New Coupon', new_merchant_coupon_path(params[:merchant_id]) %></h2>
-<ul>
-  <% @coupons.each do |coupon| %>
-    <li>
-      <%= link_to "#{coupon.coupon}", merchant_coupon_path(params[:merchant_id], coupon.id) %> - <%= number_to_percentage(coupon.amount_off, precision: 0) %>
-    </li>
-  <% end %>
-</ul>
