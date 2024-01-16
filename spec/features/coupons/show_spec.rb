@@ -129,7 +129,7 @@ RSpec.describe "coupon show" do
       visit merchant_coupon_path(@merchant1.id, coupon2.id)
       click_button("deactivate")
 
-      expect(page).to have_content("Coupon #{coupon2.coupon} is now inactive")
+      expect(page).to have_content("Coupon '#{coupon2.coupon}' is now inactive")
     end
   end
 
@@ -138,7 +138,7 @@ RSpec.describe "coupon show" do
       visit merchant_coupon_path(@merchant1.id, @coupon2.id)
       click_button("deactivate")
 
-      expect(page).to have_content("Unable to deactivate #{@coupon2.coupon} because there is an invoice in progress")
+      expect(page).to have_content("Unable to deactivate '#{@coupon2.coupon}' because there is an invoice in progress")
       expect(page.current_path).to eq(merchant_coupon_path(@merchant1.id, @coupon2.id))
     end
   end
@@ -149,8 +149,17 @@ RSpec.describe "coupon show" do
       expect(page).to have_button("activate")
 
       click_button("activate")
+
       expect(page).to have_content("Status: active")
-      expect(page).to have_content("Coupon 10% Off! is now active")
+      expect(page).to have_content("Coupon '10% Off!' is now active")
+
+      visit merchant_coupon_path(@merchant1.id, @coupon3.id)
+      save_and_open_page
+      click_button("activate")
+      save_and_open_page
+
+      expect(page).to have_content("Status: active")
+      expect(page).to have_content("Coupon 'Welcome' is now active")
     end
   end
 end

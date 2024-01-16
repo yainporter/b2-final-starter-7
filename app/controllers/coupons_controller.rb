@@ -42,11 +42,11 @@ class CouponsController < ApplicationController
 
   def update_sad_paths(coupon)
     if @coupon.pending_invoice?
-      flash[:alert] = "Unable to deactivate #{@coupon.coupon} because there is an invoice in progress"
+      flash[:alert] = "Unable to deactivate '#{@coupon.coupon}' because there is an invoice in progress"
       render :show
     else
       @coupon.update(status: params[:coupon][:status])
-      flash[:notice] = "Coupon #{@coupon.coupon} is now #{params[:coupon][:status]}"
+      flash[:notice] = "Coupon '#{@coupon.coupon}' is now #{params[:coupon][:status]}"
       render :show
     end
   end
