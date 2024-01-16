@@ -46,7 +46,7 @@ class CouponsController < ApplicationController
       render :show
     else
       @coupon.update(status: params[:coupon][:status])
-      flash[:notice] = "#{@coupon.coupon} has been deactivated!"
+      flash[:notice] = "Coupon #{@coupon.coupon} is now #{params[:coupon][:status]}"
       render :show
     end
   end

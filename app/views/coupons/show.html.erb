@@ -10,12 +10,17 @@
     <% end %>
   </p>
   <p>Status: <%= @coupon.status %> 
-    <div>
+    <% if @coupon.status == "active" %>
       <%= form_with model: [:merchant, Coupon.new], method: :patch, url: "/merchants/#{params[:merchant_id]}/coupons/#{params[:id]}", local: true do |f| %>
         <%= f.hidden_field :status, value: "inactive" %>
         <%= f.submit "deactivate" %>
       <% end %>
-    </div>
+    <% else %>
+      <%= form_with model: [:merchant, Coupon.new], method: :patch, url: "/merchants/#{params[:merchant_id]}/coupons/#{params[:id]}", local: true do |f| %>
+        <%= f.hidden_field :status, value: "active" %>
+        <%= f.submit "activate" %>
+      <% end %>
+    <% end %>
   </p>
   <p>Successful Transactions: <%= @coupon.successful_transactions%></p>
 </section>

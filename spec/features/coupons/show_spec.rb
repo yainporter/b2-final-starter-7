@@ -10,7 +10,7 @@ RSpec.describe "coupon show" do
     @merchant6 = Merchant.create!(name: 'Pens & Stuff')
 
     @coupon1 = Coupon.create!(coupon: "10% Off!", amount_off: 10, merchant_id: @merchant1.id, unique_code: "10off", percent: true)
-    @coupon2 = Coupon.create!(coupon: "Buy one, get one 50% off", amount_off: 50, merchant_id: @merchant1.id, unique_code: "BOGO50", percent: true)
+    @coupon2 = Coupon.create!(coupon: "Buy one, get one 50% off", amount_off: 50, merchant_id: @merchant1.id, unique_code: "BOGO50", percent: true, status: 0)
     @coupon3 = Coupon.create!(coupon: "Welcome", amount_off: 20, merchant_id: @merchant1.id, unique_code: "welcome20", percent: true)
 
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
@@ -129,7 +129,7 @@ RSpec.describe "coupon show" do
       visit merchant_coupon_path(@merchant1.id, coupon2.id)
       click_button("deactivate")
 
-      expect(page).to have_content("#{coupon2.coupon} has been deactivated!")
+      expect(page).to have_content("Coupon #{coupon2.coupon} is now inactive")
     end
   end
 
@@ -139,6 +139,18 @@ RSpec.describe "coupon show" do
       click_button("deactivate")
 
       expect(page).to have_content("Unable to deactivate #{@coupon2.coupon} because there is an invoice in progress")
+      expect(page.current_path).to eq(merchant_coupon_path(@merchant1.id, @coupon2.id))
+    end
+  end
+
+  describe "User Story 5 - Merchant Coupon Activate" do
+    it "has a button to activate a coupon that is inactivate" do
+      expect(page).to have_content("Status: inactive")
+      expect(page).to have_button("activate")
+
+      click_button("activate")
+      expect(page).to have_content("Status: active")
+      expect(page).to have_content("Coupon 10% Off! is now active")
     end
   end
 end
