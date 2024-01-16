@@ -96,5 +96,12 @@ RSpec.describe Coupon, type: :model do
         expect(coupon.percent?).to eq(false)
       end
     end
+
+    describe "#pending_invoice?" do
+      it "can check to see if a coupon has been applied to an invoice that is still pending" do
+        expect(@coupon2.pending_invoice?).to eq(true)
+        expect(@coupon1.pending_invoice?).to eq(false)
+      end
+    end
   end
 end

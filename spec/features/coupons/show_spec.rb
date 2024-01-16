@@ -132,4 +132,13 @@ RSpec.describe "coupon show" do
       expect(page).to have_content("#{coupon2.coupon} has been deactivated!")
     end
   end
+
+  describe "User Story 4 - Sad Path" do
+    it "has a flash alert when trying to deactivate a coupon that has a pending invoice" do
+      visit merchant_coupon_path(@merchant1.id, @coupon2.id)
+      click_button("deactivate")
+
+      expect(page).to have_content("Unable to deactivate #{@coupon2.coupon} because there is an invoice in progress")
+    end
+  end
 end

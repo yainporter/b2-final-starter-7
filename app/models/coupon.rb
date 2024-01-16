@@ -15,4 +15,8 @@ class Coupon < ApplicationRecord
   def percent?
     percent
   end
+
+  def pending_invoice?
+    invoices.where("status = ?", "1").count >= 1 ? true : false
+  end
 end

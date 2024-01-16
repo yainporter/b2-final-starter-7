@@ -20,11 +20,7 @@ class CouponsController < ApplicationController
 
   def update
     @coupon = Coupon.find(params[:id])
-    if coupon_params.empty?
-      @coupon.update(status: params[:coupon][:status])
-      flash[:notice] = "#{@coupon.coupon} has been deactivated!"
-      render :show
-    end
+    update_sad_paths(@coupon)
   end
 
   private
@@ -41,6 +37,17 @@ class CouponsController < ApplicationController
     else
       flash[:alert] = "Coupon not created: #{coupon.errors.full_messages.join(", ")}"
       render :new
+    end
+  end
+
+  def update_sad_paths(coupon)
+    if @coupon.pending_invoice?
+      flash[:alert] = "Unable to deactivate #{@coupon.coupon} because there is an invoice in progress"
+      render :show
+    else
+      @coupon.update(status: params[:coupon][:status])
+      flash[:notice] = "#{@coupon.coupon} has been deactivated!"
+      render :show
     end
   end
 
