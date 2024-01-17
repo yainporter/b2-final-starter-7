@@ -34,4 +34,11 @@ FactoryBot.define do
     merchant
     invoice
   end
+
+  factory :coupon do
+    coupon {Faker::Commerce.promotion_code(digits: 2)}
+    amount_off {Faker::Number.between(from: 1, to: 100)}
+    unique_code {Faker::Commerce.promotion_code}
+    percent {true}
+  end
 end

@@ -1,0 +1,8 @@
+id,coupon,amount_off,percent,unique_code,status,merchant_id
+1,10% Off!,10,true,10off,1,1
+2,BOGO,50,false,bogo50,0,2
+3,Welcome,20,true,welcome20,1,3
+4,$10 Off!,10,false,10dollars,1,1
+5,$5 Off!,5,false,5dollars,1,2
+6,VIP 30% Off,30,true,VIP30,1,3
+7,Subscribe and save,20,true,sub&save,0,1
